@@ -26,8 +26,6 @@ db = SQLAlchemy(app)
 class ContosoUser(db.Model):
     lr_id = db.Column(db.Integer, primary_key=True)
     profile_picture = db.Column(db.LargeBinary)
-    facebook_id = db.Column(db.Integer)
-    facebook_user = db.relationship('FacebookUser', backref=db.backref('Contoso_User'))
     email = db.Column(db.String(400), unique=True)
     password = db.Column(db.String(60), nullable=False)
     registration_time = db.Column(db.DateTime)
