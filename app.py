@@ -10,7 +10,7 @@ import json
 import re
 import uuid
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 
