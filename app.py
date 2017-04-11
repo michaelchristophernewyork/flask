@@ -96,7 +96,7 @@ def get_users():
 
 @app.route('/api/v0/users/<int:user_id>/', methods=['GET'])
 def get_user(user_id):
-    user = ContosoUser.query.filter_by(id=user_id).first()
+    user = ContosoUser.query.filter_by(lr_id=user_id).first()
     if type(None) == type(user):
         return jsonify()
     return jsonify(
