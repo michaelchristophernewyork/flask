@@ -101,6 +101,7 @@ def get_drop_all():
     populate_contoso_user_table()
     return jsonify({'status': 'success'}), 200
 
+
 def populate_contoso_user_table():
     db.session.add(create_one_user())
     if check_password():
@@ -108,12 +109,22 @@ def populate_contoso_user_table():
     else:
         db.session.remove()
 
+
 def create_one_user():
     email = 'hikingfan@gmail.com'
     password = 'hunter2'
     password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode()
     user = ContosoUser(email, password_hash, datetime.datetime.utcnow())
     return user
+
+
+def check_password():
+    hashed = '$2b$12$UiSqDAzc6uQopD2b0juwielLqHfWP.DY7yOmfrNSML6AALC7.hU1e'.encode('utf-8')
+    input_password = 'hunter2'
+    if bcrypt.checkpw(input_password.encode('utf-8'), hashed):
+        return True
+    return False
+
 
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):
