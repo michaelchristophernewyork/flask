@@ -89,6 +89,41 @@ def api_index_v0():
     return 'Welcome to Contoso api V0' + str(datetime.datetime.utcnow())
 
 
+@app.route('/api/v0/users/', methods=['GET'])
+def get_users():
+    users = [i.serialize for i in ContosoUser.query.all()]
+    return jsonify({'users': users})
+
+
+@app.route('/api/v0/users/<int:user_id>/', methods=['GET'])
+def get_user(user_id):
+    user = ContosoUser.query.filter_by(id=user_id).first()
+    if type(None) == type(user):
+        return jsonify()
+    return jsonify(
+        email=user.email,
+        userId=1,
+        lr_id=1,
+        title='hello',
+        body='body'
+    ), 201
+
+
+@app.route('/api/v0/users/', methods=['POST'])
+def create_user():
+    if len(request.json['password']) < 8:
+        abort(400)
+    if not re.match(r'[^@]+@[^@]+\.[^@]+', request.json['email']):
+        abort(400)
+    if not request.json['email'].lower() == request.json['confirmEmail']:
+        abort(400)
+    contoso_user = ContosoUser(request.json['email'],
+                                     bcrypt.hashpw(request.json['password'].encode('utf-8'),
+                                                   bcrypt.gensalt()).decode(), datetime.datetime.utcnow())
+    db.session.add(contoso_user)
+    db.session.commit()
+    return jsonify({'user': contoso_user.serialize_email}), 201
+
 ###
 # The functions below should be applicable to all Flask apps.
 ###
