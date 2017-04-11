@@ -77,13 +77,12 @@ def about():
     """Render the website's about page."""
     return render_template('about.html')
 
-@app.route('/api')
+
 @app.route('/api/')
 def api_index():
     return 'Welcome to Contoso api' + str(datetime.datetime.utcnow())
 
 
-@app.route('/api/v0')
 @app.route('/api/v0/')
 def api_index_v0():
     return 'Welcome to Contoso api V0' + str(datetime.datetime.utcnow())
