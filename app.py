@@ -52,7 +52,6 @@ class ContosoUser(db.Model):
         return {
             'id': self.lr_id,
             'profile_picture': self.profile_picture,
-            'facebook_id': self.facebook_id,
             'email': self.email,
             'password': self.password,
             'registration_time': self.registration_time,
